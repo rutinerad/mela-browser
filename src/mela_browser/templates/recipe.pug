@@ -4,26 +4,37 @@ block title
   | #{recipe.title}
 
 block content
-  sl-button(href='/', variant="text") ← All recipes
-  h1 #{recipe.title}
+  sl-breadcrumb
+    sl-breadcrumb-item(href='/') Recipes
+    sl-breadcrumb-item #{recipe.title}
+  h1.recipe-title #{recipe.title}
   if recipe.tags
-    div
+    div.tags(style="margin-bottom: var(--sl-spacing-large)")
       each tag in recipe.tags
-        sl-badge(variant="neutral") #{tag}
-  sl-divider
-  if recipe.prep_time or recipe.cook_time or recipe.total_time or recipe.yield_value
-    each label, val in [("Prep", recipe.prep_time), ("Cook", recipe.cook_time), ("Total", recipe.total_time), ("Yield", recipe.yield_value)]
-      if val
-        sl-badge(variant="primary") #{label}: #{val}
-    sl-divider
+        sl-tag(variant="neutral") #{tag}
+  if meta
+    p.meta #{meta}
   if recipe.ingredients
-    sl-details(summary="Ingredients", open)
-      pre #{recipe.ingredients}
+    h2 Ingredients
+    div.markdown(data-style="ul") #{recipe.ingredients}
   if recipe.instructions
-    sl-details(summary="Instructions", open)
-      pre #{recipe.instructions}
+    h2 Instructions
+    div.markdown(data-style="ol") #{recipe.instructions}
   if recipe.notes
     sl-details(summary="Notes", open)
-      pre #{recipe.notes}
+      div.markdown #{recipe.notes}
+  script.
+    function addListMarkers(text, prefix) {
+      return text.split('\n').map(line => {
+        if (!line.trim() || line.startsWith('#')) return line;
+        return prefix + line;
+      }).join('\n');
+    }
+    document.querySelectorAll('.markdown').forEach(el => {
+      let text = el.textContent.trim();
+      if (el.dataset.style === 'ul') text = addListMarkers(text, '- ');
+      if (el.dataset.style === 'ol') text = addListMarkers(text, '1. ');
+      el.innerHTML = marked.parse(text);
+    });
   if recipe.link
     sl-button(href='#{recipe.link}', target='_blank') Source ↗

@@ -14,4 +14,9 @@ def show(selector: str) -> str:
         recipe = store.get_recipe(selector)
     except (RecipeNotFoundError, AmbiguousRecipeError):
         abort(404)
-    return render_template("recipe.pug", recipe=recipe)
+    meta = " · ".join(
+        f"{label}: {val}"
+        for label, val in [("Prep", recipe.prep_time), ("Cook", recipe.cook_time), ("Total", recipe.total_time), ("Yield", recipe.yield_value)]
+        if val
+    )
+    return render_template("recipe.pug", recipe=recipe, meta=meta)

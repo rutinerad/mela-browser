@@ -11,9 +11,11 @@ block content
       border-bottom: 1px solid var(--sl-color-neutral-100);
       gap: var(--sl-spacing-medium);
     }
-    .tags { display: flex; gap: var(--sl-spacing-x-small); flex-shrink: 0; }
+    .tags { display: flex; gap: var(--sl-spacing-2x-small); flex-shrink: 0; }
+  sl-breadcrumb
+    sl-breadcrumb-item Recipes
   h1 Recipes (#{recipes|length})
-  sl-input#filter(placeholder="Filter recipes...", clearable, autofocus)
+  sl-input#filter(placeholder="Filter recipes...", clearable, autofocus, style="margin: var(--sl-spacing-large) 0")
   ul#list
     each r in recipes
       li(data-title='#{r.title|lower}')
@@ -21,7 +23,7 @@ block content
         if r.tags
           .tags
             each tag in r.tags
-              sl-badge(variant="neutral", pill) #{tag}
+              sl-tag(variant="neutral", size="small") #{tag}
   script.
     const filter = document.getElementById('filter');
     const items = document.querySelectorAll('#list li');
