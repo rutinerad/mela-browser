@@ -320,6 +320,7 @@ dependencies = [
 dev = [
     { name = "mypy" },
     { name = "ruff" },
+    { name = "types-waitress" },
 ]
 
 [package.metadata]
@@ -333,6 +334,7 @@ requires-dist = [
 dev = [
     { name = "mypy", specifier = ">=1.20.1" },
     { name = "ruff", specifier = ">=0.15.11" },
+    { name = "types-waitress", specifier = ">=3.0.1.20260408" },
 ]
 
 [[package]]
@@ -448,6 +450,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
+]
+
+[[package]]
+name = "types-waitress"
+version = "3.0.1.20260408"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2a/32/b5c6fcf57c1ae663e3ea97898b0cd4a5877a3487e9e8f33e8c4b7df0ad82/types_waitress-3.0.1.20260408.tar.gz", hash = "sha256:8e89086f02594e5973efdc880b1e08c5c816dcdbc7adf145cf3cb62dd1a4d131", size = 14444, upload-time = "2026-04-08T04:32:43.41Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ef/22/dcb4eb6004aeff8d9724e80f783da62478a0727e1376fe39e22d2579e809/types_waitress-3.0.1.20260408-py3-none-any.whl", hash = "sha256:1f736b5e5accb0b04c952ca72018da2986202694eed1652ab497250dda801fe2", size = 17506, upload-time = "2026-04-08T04:32:42.542Z" },
 ]
 
 [[package]]

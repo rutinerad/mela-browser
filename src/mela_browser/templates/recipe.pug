@@ -12,8 +12,23 @@ block content
     div.tags(style="margin-bottom: var(--sl-spacing-large)")
       each tag in recipe.tags
         sl-tag(variant="neutral") #{tag}
-  if meta
-    p.meta #{meta}
+  if meta or yield_value or source_label
+    p.meta
+      | #{meta}
+      if yield_value
+        if meta
+          |  ·
+        sl-icon(name="person")
+        |  #{yield_value}
+      if source_label
+        |  ·
+        if source_url
+          a(href='#{source_url}', target='_blank')
+            sl-icon(name="book")
+            |  #{source_label}
+        else
+          sl-icon(name="book")
+          |  #{source_label}
   if recipe.ingredients
     h2 Ingredients
     div.markdown(data-style="ul") #{recipe.ingredients}
@@ -36,5 +51,3 @@ block content
       if (el.dataset.style === 'ol') text = addListMarkers(text, '1. ');
       el.innerHTML = marked.parse(text);
     });
-  if recipe.link
-    sl-button(href='#{recipe.link}', target='_blank') Source ↗
