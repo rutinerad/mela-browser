@@ -14,7 +14,7 @@ block content
     .tags { display: flex; gap: var(--sl-spacing-2x-small); flex-shrink: 0; }
   sl-breadcrumb
     sl-breadcrumb-item Recipes
-  h1 Recipes (#{recipes|length})
+  h1 Recipes
   sl-input#filter(placeholder="Filter recipes...", clearable, autofocus, style="margin: var(--sl-spacing-large) 0")
   ul#list
     each r in recipes
@@ -24,10 +24,19 @@ block content
           .tags
             each tag in r.tags
               sl-tag(variant="neutral", size="small") #{tag}
+  p#count.meta #{recipes|length} Recipes
   script.
+    const total = #{recipes|length};
     const filter = document.getElementById('filter');
     const items = document.querySelectorAll('#list li');
+    const count = document.getElementById('count');
     filter.addEventListener('sl-input', () => {
       const q = filter.value.toLowerCase();
-      items.forEach(li => li.style.display = li.dataset.title.includes(q) ? '' : 'none');
+      let visible = 0;
+      items.forEach(li => {
+        const show = li.dataset.title.includes(q);
+        li.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      count.textContent = q ? `${visible}/${total} Recipes` : `${total} Recipes`;
     });
