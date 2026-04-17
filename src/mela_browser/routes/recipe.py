@@ -23,4 +23,7 @@ def show(selector: str) -> str:
     source_url = link if parsed.scheme in ("http", "https") else None
     netloc = parsed.netloc.removeprefix("www.")
     source_label = netloc or link or None
-    return render_template("recipe.pug", recipe=recipe, meta=meta, source_url=source_url, source_label=source_label, yield_value=recipe.yield_value)
+    return render_template(
+        "recipe.pug", recipe=recipe, meta=meta,
+        source_url=source_url, source_label=source_label, yield_value=recipe.yield_value,
+    )

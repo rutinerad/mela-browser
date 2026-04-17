@@ -4,9 +4,14 @@ block title
   | #{recipe.title}
 
 block content
-  sl-breadcrumb
-    sl-breadcrumb-item(href='/') Recipes
-    sl-breadcrumb-item #{recipe.title}
+  div(style="display:flex; justify-content:space-between; align-items:center")
+    sl-breadcrumb
+      sl-breadcrumb-item(href='/') Recipes
+      sl-breadcrumb-item #{recipe.title}
+    sl-button(href='/recipe/#{recipe.pk}/melarecipe', variant="text", size="small")
+      sl-icon(name="download", style="font-size:1.2rem; font-weight:bold")
+  if recipe.images
+    img(src='/recipe/#{recipe.pk}/image/#{recipe.images[0].index}', alt='#{recipe.title}', style='width:100%;max-height:400px;object-fit:cover;border-radius:var(--sl-border-radius-large);margin:var(--sl-spacing-medium) 0')
   h1.recipe-title #{recipe.title}
   if recipe.tags
     div.tags(style="margin-bottom: var(--sl-spacing-large)")
@@ -49,5 +54,5 @@ block content
       let text = el.textContent.trim();
       if (el.dataset.style === 'ul') text = addListMarkers(text, '- ');
       if (el.dataset.style === 'ol') text = addListMarkers(text, '1. ');
-      el.innerHTML = marked.parse(text);
+      el.innerHTML = DOMPurify.sanitize(marked.parse(text));
     });
