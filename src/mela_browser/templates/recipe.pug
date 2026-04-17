@@ -1,0 +1,26 @@
+extends base.pug
+
+block title
+  | #{recipe.title}
+
+block content
+  a.back(href='/') ← All recipes
+  h1 #{recipe.title}
+  p.meta
+    if recipe.tags
+      | #{recipe.tags|join(", ")}
+    each label, val in [("Prep", recipe.prep_time), ("Cook", recipe.cook_time), ("Total", recipe.total_time), ("Yield", recipe.yield_value)]
+      if val
+        |   · #{label}: #{val}
+  if recipe.ingredients
+    h2 Ingredients
+    pre #{recipe.ingredients}
+  if recipe.instructions
+    h2 Instructions
+    pre #{recipe.instructions}
+  if recipe.notes
+    h2 Notes
+    pre #{recipe.notes}
+  if recipe.link
+    p
+      a(href='#{recipe.link}', target='_blank') Source ↗

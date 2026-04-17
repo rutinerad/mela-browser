@@ -1,0 +1,13 @@
+extends base.pug
+
+block title
+  | Recipes
+
+block content
+  h1 Recipes (#{recipes|length})
+  ul
+    each r in recipes
+      li
+        a(href='/recipe/#{r.pk}') #{r.title}
+        if r.tags
+          span.meta  #{r.tags|join(", ")}
