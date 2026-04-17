@@ -16,5 +16,10 @@ def create_app(store: MelaStore) -> Flask:
     return app
 
 
-def serve(store: MelaStore, host: str = "127.0.0.1", port: int = 8080) -> None:
-    create_app(store).run(host=host, port=port)
+def serve(store: MelaStore, host: str = "127.0.0.1", port: int = 8080, debug: bool = False) -> None:
+    app = create_app(store)
+    if debug:
+        app.run(host=host, port=port, threaded=False, debug=True)
+    else:
+        from waitress import serve as waitress_serve
+        waitress_serve(app, host=host, port=port, threads=1)

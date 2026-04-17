@@ -1,13 +1,31 @@
 extends base.pug
 
-block title
-  | Recipes
-
 block content
+  style.
+    ul { list-style: none; padding: 0; margin: 0; }
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sl-spacing-small) 0;
+      border-bottom: 1px solid var(--sl-color-neutral-100);
+      gap: var(--sl-spacing-medium);
+    }
+    .tags { display: flex; gap: var(--sl-spacing-x-small); flex-shrink: 0; }
   h1 Recipes (#{recipes|length})
-  ul
+  sl-input#filter(placeholder="Filter recipes...", clearable, autofocus)
+  ul#list
     each r in recipes
-      li
+      li(data-title='#{r.title|lower}')
         a(href='/recipe/#{r.pk}') #{r.title}
         if r.tags
-          span.meta  #{r.tags|join(", ")}
+          .tags
+            each tag in r.tags
+              sl-badge(variant="neutral", pill) #{tag}
+  script.
+    const filter = document.getElementById('filter');
+    const items = document.querySelectorAll('#list li');
+    filter.addEventListener('sl-input', () => {
+      const q = filter.value.toLowerCase();
+      items.forEach(li => li.style.display = li.dataset.title.includes(q) ? '' : 'none');
+    });
