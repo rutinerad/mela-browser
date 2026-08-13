@@ -4,6 +4,7 @@ import base64
 import plistlib
 import sqlite3
 import subprocess
+import sys
 import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -590,12 +591,17 @@ class MelaStore:
         ).fetchall()
         images: list[RecipeImage] = []
         for row in rows:
+            try:
+                data = self._decode_image_blob(row["data"])
+            except ImageDecodeError as error:
+                print(f"warning: skipping image for recipe {recipe_pk}: {error}", file=sys.stderr)
+                continue
             images.append(
                 RecipeImage(
                     index=int(row["image_index"] or 0),
                     width=int(row["width"]) if row["width"] is not None else None,
                     height=int(row["height"]) if row["height"] is not None else None,
-                    data=self._decode_image_blob(row["data"]),
+                    data=data,
                 )
             )
         return images
