@@ -1,0 +1,9 @@
+.git
+.github
+.claude
+.venv
+__pycache__
+*.pyc
+tests
+CHANGELOG.md
+RELEASING.md

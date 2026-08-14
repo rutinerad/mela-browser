@@ -1,0 +1,13 @@
+services:
+  mela-browser:
+    build: .
+    image: mela-browser:latest
+    container_name: mela-browser
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mounting the whole Group Containers directory lets mela-browser's
+      # normal auto-discovery find Curcuma.sqlite on its own — no need to
+      # look up your Mela app's team ID.
+      - "${HOME}/Library/Group Containers:/home/mela/Library/Group Containers:ro"
+    restart: unless-stopped
